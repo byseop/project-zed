@@ -14,11 +14,11 @@ export const createSteamProvider = (req: NextRequest) => {
 export const commonAuthOptions: Omit<NextAuthOptions, 'providers'> = {
   session: {
     strategy: 'jwt',
-    maxAge: 60 * 60,
+    maxAge: 7 * 24 * 60 * 60,
     updateAge: 0
   },
   jwt: {
-    maxAge: 60 * 60
+    maxAge: 7 * 24 * 60 * 60
   },
   callbacks: {
     async session({ session, token }) {
