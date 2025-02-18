@@ -1,0 +1,10 @@
+// 0: 성공
+// 1~999: 리프레시
+// 1000~: 만료
+export const AUTH_STATUS = {
+  OK: 0,
+  ACCESS_TOKEN_REFRESH: 101,
+  USER_AGENT_NOT_MATCHED: 1001,
+  IP_NOT_MATCHED: 1002,
+  REFRESH_TOKEN_EXPIRED: 1003
+} as const;
