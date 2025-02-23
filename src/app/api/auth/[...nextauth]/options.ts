@@ -103,26 +103,6 @@ export const commonAuthOptions: Omit<NextAuthOptions, 'providers'> = {
       // 스팀 로그인
       if (account?.provider === 'steam') {
         try {
-          console.log({
-            where: {
-              steamId: account.providerAccountId
-            },
-            create: {
-              steamId: account.providerAccountId,
-              name: user.name || '',
-              avatar: user.image || '',
-              email: user.email || '',
-              accounts: {
-                create: account
-              }
-            },
-            update: {
-              name: user.name || '',
-              avatar: user.image,
-              email: user.email || ''
-            }
-          });
-
           await prisma.user.upsert({
             where: {
               steamId: account.providerAccountId
@@ -168,10 +148,6 @@ export const commonAuthOptions: Omit<NextAuthOptions, 'providers'> = {
       }
     }
   }
-  // pages: {
-  //   signIn: '/auth/login',
-  //   error: '/auth/error'
-  // }
 };
 
 export const createAuthOptions = (req: NextRequest): NextAuthOptions => ({
