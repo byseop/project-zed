@@ -1,4 +1,3 @@
-import LoginButtons from '@/components/LoginButtons';
 import { getServerSession } from 'next-auth';
 
 export default async function Home() {
@@ -7,7 +6,6 @@ export default async function Home() {
     <div>
       <h1>App Router Simple Example</h1>
       <p>Welcome, {session?.user?.name ?? 'Guest'}!</p>
-      <LoginButtons />
 
       {session && (
         <>

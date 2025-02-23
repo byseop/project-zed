@@ -1,10 +1,9 @@
 'use client';
 
 import { GalleryVerticalEnd } from 'lucide-react';
-import { BsSteam } from 'react-icons/bs';
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
 import { signIn } from 'next-auth/react';
+import LoginButtons from '@/components/LoginButtons';
 
 export function LoginForm({
   className,
@@ -46,9 +45,7 @@ export function LoginForm({
             </div>
           </div>
           <div className="flex flex-col gap-6">
-            <Button type="submit" className="w-full">
-              <BsSteam className="w-6 h-6" /> Steam 계정으로 간편하게 로그인
-            </Button>
+            <LoginButtons />
           </div>
         </div>
       </form>
