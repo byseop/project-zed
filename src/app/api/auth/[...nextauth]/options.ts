@@ -4,6 +4,8 @@ import Steam from 'next-auth-steam';
 import { headers } from 'next/headers';
 import { AUTH_STATUS } from './status';
 import dayjs from 'dayjs';
+import { PrismaAdapter } from '@next-auth/prisma-adapter';
+import { prisma } from '@/lib/prisma';
 
 export const createSteamProvider = (req: NextRequest) => {
   return Steam(req, {
@@ -12,6 +14,7 @@ export const createSteamProvider = (req: NextRequest) => {
 };
 
 export const commonAuthOptions: Omit<NextAuthOptions, 'providers'> = {
+  adapter: PrismaAdapter(prisma),
   session: {
     strategy: 'jwt',
     maxAge: 7 * 24 * 60 * 60,
@@ -95,6 +98,63 @@ export const commonAuthOptions: Omit<NextAuthOptions, 'providers'> = {
       }
 
       return token;
+    },
+    async signIn({ user, account }) {
+      // 스팀 로그인
+      if (account?.provider === 'steam') {
+        try {
+          console.log({
+            where: {
+              steamId: account.providerAccountId
+            },
+            create: {
+              steamId: account.providerAccountId,
+              name: user.name || '',
+              avatar: user.image || '',
+              email: user.email || '',
+              accounts: {
+                create: account
+              }
+            },
+            update: {
+              name: user.name || '',
+              avatar: user.image,
+              email: user.email || ''
+            }
+          });
+
+          await prisma.user.upsert({
+            where: {
+              steamId: account.providerAccountId
+            },
+            create: {
+              steamId: account.providerAccountId,
+              name: user.name || '',
+              avatar: user.image || '',
+              email: user.email || '',
+              accounts: {
+                create: {
+                  provider: account.provider,
+                  type: account.type,
+                  providerAccountId: account.providerAccountId,
+                  access_token: account.access_token,
+                  id_token: account.id_token
+                }
+              }
+            },
+            update: {
+              name: user.name || '',
+              avatar: user.image,
+              email: user.email || ''
+            }
+          });
+        } catch (error) {
+          console.error('Sign in error:', error);
+          return false;
+        }
+      }
+
+      return true;
     }
   },
   cookies: {
@@ -108,6 +168,10 @@ export const commonAuthOptions: Omit<NextAuthOptions, 'providers'> = {
       }
     }
   }
+  // pages: {
+  //   signIn: '/auth/login',
+  //   error: '/auth/error'
+  // }
 };
 
 export const createAuthOptions = (req: NextRequest): NextAuthOptions => ({
