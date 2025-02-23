@@ -135,6 +135,9 @@ export const commonAuthOptions: Omit<NextAuthOptions, 'providers'> = {
       }
 
       return true;
+    },
+    async redirect({ url, baseUrl }) {
+      return url.startsWith(baseUrl) ? url : baseUrl;
     }
   },
   cookies: {

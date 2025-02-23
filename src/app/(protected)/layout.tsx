@@ -15,7 +15,10 @@ const ProtectedLayout: FC<PropsWithChildren> = async ({ children }) => {
   };
 
   if (!session || !session.user) {
-    redirect('/api/auth/logout');
+    const xUrl = headersList.get('x-url');
+    redirect(
+      `/auth/login${xUrl ? `?callbackUrl=${encodeURIComponent(xUrl)}` : ''}`
+    );
   }
 
   if (session.status) {

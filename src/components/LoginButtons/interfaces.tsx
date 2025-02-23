@@ -16,3 +16,7 @@ export const providersConstant: Record<
     icon: <BsSteam className="w-6 h-6" />
   }
 } as const;
+
+export interface ILoginButtonsProps {
+  callbackUrl?: string;
+}

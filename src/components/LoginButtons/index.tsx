@@ -3,13 +3,21 @@
 import { useGetProvidersQuery } from '@/apis/auth/getProviders/query';
 import { signIn } from 'next-auth/react';
 import { Button } from '../ui/button';
-import { isProviderId, providersConstant, ProviderId } from './interfaces';
+import {
+  isProviderId,
+  providersConstant,
+  ProviderId,
+  ILoginButtonsProps
+} from './interfaces';
 
-export default function LoginButtons() {
+export default function LoginButtons({ callbackUrl }: ILoginButtonsProps) {
   const { data: providers } = useGetProvidersQuery();
 
   const handleClickLogin = (providerId: ProviderId) => {
-    signIn(providerId);
+    signIn(providerId, {
+      callbackUrl: callbackUrl || undefined,
+      redirect: false
+    });
   };
 
   return (
