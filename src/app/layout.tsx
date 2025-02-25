@@ -5,6 +5,7 @@ import SessionProvider from '@/components/SessionProvider';
 import { getServerSession } from 'next-auth';
 import QueryProvider from '@/components/QueryProvider';
 import { ThemeProvider } from '@/components/ThemeProvider';
+import { getAuthOptions } from './api/auth/[...nextauth]/route';
 
 const geistSans = Geist({
   variable: '--font-geist-sans',
@@ -26,7 +27,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getServerSession();
+  const authOptions = await getAuthOptions();
+  const session = await getServerSession(authOptions);
 
   return (
     <html suppressHydrationWarning lang="ko">

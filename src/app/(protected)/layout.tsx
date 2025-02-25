@@ -1,16 +1,13 @@
 import { FC, PropsWithChildren } from 'react';
 import { getServerSession, Session } from 'next-auth';
-import { createAuthOptions } from '@/app/api/auth/[...nextauth]/options';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
+import { getAuthOptions } from '../api/auth/[...nextauth]/route';
 
 const ProtectedLayout: FC<PropsWithChildren> = async ({ children }) => {
   const headersList = await headers();
-  const session = (await getServerSession(
-    createAuthOptions({
-      headers: headersList
-    } as any)
-  )) as Session & {
+  const authOptions = await getAuthOptions();
+  const session = (await getServerSession(authOptions)) as Session & {
     status: number | null;
   };
 
