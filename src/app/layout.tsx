@@ -34,7 +34,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <QueryProvider>
-          <SessionProvider session={session}>
+          <SessionProvider session={session} basePath="/api/auth">
             <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
               <div className="flex min-h-svh flex-col items-center justify-center gap-6 bg-background p-6 md:p-10">
                 {children}
