@@ -4,7 +4,8 @@ import { getToken, encode } from 'next-auth/jwt';
 import dayjs from 'dayjs';
 
 export async function GET(req: NextRequest) {
-  const redirectUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL || '/';
+  const redirectUrl =
+    process.env.NEXTAUTH_URL || `https://${process.env.VERCEL_URL}` || '/';
 
   try {
     const token = await getToken({ req });

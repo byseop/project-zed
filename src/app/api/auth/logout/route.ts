@@ -8,7 +8,8 @@ export async function GET() {
   cookieStore.delete('next-auth.callback-url');
   cookieStore.delete('next-auth.csrf-token');
 
-  const redirectUrl = process.env.NEXTAUTH_URL || process.env.VERCEL_URL || '/';
+  const redirectUrl =
+    process.env.NEXTAUTH_URL || `https://${process.env.VERCEL_URL}` || '/';
 
   return NextResponse.redirect(new URL('/', redirectUrl));
 }
