@@ -2,7 +2,7 @@ import { FC, PropsWithChildren } from 'react';
 import { getServerSession, Session } from 'next-auth';
 import { headers } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { getAuthOptions } from '../api/auth/[...nextauth]/route';
+import { getAuthOptions } from '../api/auth/[...nextauth]/auth-utils';
 
 const ProtectedLayout: FC<PropsWithChildren> = async ({ children }) => {
   const headersList = await headers();
