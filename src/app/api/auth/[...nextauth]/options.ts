@@ -149,6 +149,24 @@ export const commonAuthOptions: Omit<NextAuthOptions, 'providers'> = {
         sameSite: 'lax',
         path: '/'
       }
+    },
+    callbackUrl: {
+      name: 'next-auth.callback-url',
+      options: {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        path: '/'
+      }
+    },
+    csrfToken: {
+      name: 'next-auth.csrf-token',
+      options: {
+        httpOnly: true,
+        secure: true,
+        sameSite: 'lax',
+        path: '/'
+      }
     }
   }
 };
