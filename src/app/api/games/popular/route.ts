@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getPopularGames } from '@/apis/igdb';
+import { withAuth } from '@/lib/withAuth';
 
-export async function GET() {
+async function handler() {
   try {
     const games = await getPopularGames();
     return NextResponse.json(games);
@@ -18,3 +19,5 @@ export async function GET() {
     );
   }
 }
+
+export const GET = withAuth(handler);

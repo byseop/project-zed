@@ -2,7 +2,7 @@ import { createClient, RedisClientType } from 'redis';
 
 let redisClient: RedisClientType | null = null;
 
-export async function getRedisClient() {
+export async function getRedisClient(): Promise<RedisClientType> {
   if (!redisClient) {
     redisClient = createClient({
       url: process.env.REDIS_URL
